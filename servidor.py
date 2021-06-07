@@ -22,7 +22,7 @@ def MsgClient(msg, conn, addr):
             os.chdir(diretorio_name)
             conn.send(str.encode(f'+OK\n'))
         except Exception as Erro:
-            conn.send(str.encode('\033[31m'+'-ERR'+'\033[0;0m'+'{}\n'.format(Erro)))
+            conn.send(str.encode('-ERR {}\n'.format(Erro)))
 
     elif msg[0].upper() == 'CRD':
         newdiretorio_name = " ".join(msg[1:])
@@ -33,7 +33,7 @@ def MsgClient(msg, conn, addr):
             os.mkdir(path)
             conn.send(str.encode(f'+OK\n'))
         except Exception as Erro:
-            conn.send(str.encode('\033[31m'+'-ERR'+'\033[0;0m'+'{}\n'.format(Erro)))
+            conn.send(str.encode('-ERR {}\n'.format(Erro)))
 
     elif msg[0].upper() == 'RMD':
         remove_dir = " ".join(msg[1:])
@@ -44,7 +44,7 @@ def MsgClient(msg, conn, addr):
             os.rmdir(path)
             conn.send(str.encode(f'+OK\n'))
         except Exception as Erro:
-            conn.send(str.encode('\033[31m'+'-ERR'+'\033[0;0m'+'{}\n'.format(Erro)))
+            conn.send(str.encode('-ERR {}\n'.format(Erro)))
 
     elif msg[0].upper() == 'RMF':
         remove_file = " ".join(msg[1:])
@@ -55,7 +55,7 @@ def MsgClient(msg, conn, addr):
             os.remove(path)
             conn.send(str.encode(f'+OK\n'))
         except Exception as Erro:
-            conn.send(str.encode('\033[31m'+'-ERR'+'\033[0;0m'+'{}\n'.format(Erro)))
+            conn.send(str.encode('-ERR {}\n'.format(Erro)))
     
     elif msg[0].upper() == 'MOVE':
         src = msg[1]
@@ -66,7 +66,7 @@ def MsgClient(msg, conn, addr):
             shutil.move(src, dst)
             conn.send(str.encode(f'+OK\n'))
         except Exception as Erro:
-            conn.send(str.encode('\033[31m'+'-ERR'+'\033[0;0m'+'{}\n'.format(Erro)))
+            conn.send(str.encode('-ERR {}\n'.format(Erro)))
 
     
     elif msg[0].upper() == 'WRITE':
@@ -79,7 +79,7 @@ def MsgClient(msg, conn, addr):
                 arq.write(dados)
                 conn.send(str.encode(f'File: {name_arq}\n'))
             except Exception as Erro:
-                conn.send(str.encode('\033[31m'+'-ERR'+'\033[0;0m'+'{}\n'.format(Erro)))
+                conn.send(str.encode('-ERR {}\n'.format(Erro)))
         else:
             names_arq = " ".join(msg[1:])
             names_arqs = names_arq.split(' ')
@@ -90,7 +90,7 @@ def MsgClient(msg, conn, addr):
     
                 conn.send(str.encode('-Ok'))
             except Exception as Erro:
-                conn.send(str.encode('\033[31m'+'-ERR'+'\033[0;0m'+'{}\n'.format(Erro)))
+                conn.send(str.encode('-ERR {}\n'.format(Erro)))
 
 
     elif msg[0].upper() == 'GET':
@@ -107,7 +107,7 @@ def MsgClient(msg, conn, addr):
                         if not dados: break
                         conn.send(dados)
         except Exception as Erro:
-                conn.send(str.encode('\033[31m'+'-ERR'+'\033[0;0m'+'{}\n'.format(Erro)))
+                conn.send(str.encode('-ERR {}\n'.format(Erro)))
     
     elif msg[0].upper() == 'READ':
         read_arq = " ".join(msg[1:])
@@ -121,7 +121,7 @@ def MsgClient(msg, conn, addr):
                         if not dados: break
                         conn.send(dados)
         except Exception as Erro:
-                conn.send(str.encode('\033[31m'+'-ERR'+'\033[0;0m'+'{}\n'.format(Erro)))
+                conn.send(str.encode('-ERR {}\n'.format(Erro)))
     
     elif msg[0].upper() == 'LIST':
         listar_arquivos = os.listdir('.')
